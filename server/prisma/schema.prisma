@@ -25,7 +25,14 @@ model Code {
 }
 
 model Problem {
-  id        String   @id @default(cuid())
-  title     String
-  difficulty String
+  id           String   @id @default(cuid())
+  name         String
+  topics       String[]
+  description  String
+  difficulty   String
+  testCases    String[]
+  Constraints  String[]
+  Hints        String[]
+  Topics       String[]
+  Solutions    String
 }
