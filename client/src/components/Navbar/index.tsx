@@ -1,10 +1,11 @@
 import { Navbar, Typography } from "@material-tailwind/react";
 import ProfileMenu from "./PrrofileMenu";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function ComplexNavbar() {
   const [cookies] = useCookies(["token"]);
+  const navigate = useNavigate();
   return (
     // @ts-expect-error___
     <Navbar
@@ -15,33 +16,20 @@ export default function ComplexNavbar() {
       placeholder={undefined}
     >
       <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
-        {/* @ts-expect-error___ */}
-        <Typography
-          as="a"
+        <Link
+          to={"/"}
           className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-black dark:text-white"
-          placeholder={undefined}
         >
-          <Link to="/">
-            Leetcode
-          </Link>
-        </Typography>
+          Leetcode
+        </Link>
         {cookies && cookies.token ? (
           <ProfileMenu />
         ) : (
-          // @ts-expect-error___
-          <Typography
-            as="a"
-            className="mr-4 cursor-pointer py-1.5 font-medium text-black dark:text-white"
-            placeholder={undefined}
-          >
-            <Link to={"/login"}>
-              Login
-            </Link>
+          <div className="mr-4 cursor-pointer py-1.5 font-medium text-black dark:text-white flex">
+            <p onClick={() => navigate("/login")}>Login</p>
             &nbsp;or&nbsp;
-            <Link to={"/register"}>
-              Register
-            </Link>
-          </Typography>
+            <p onClick={() => navigate("/register")}>Register</p>
+          </div>
         )}
       </div>
     </Navbar>

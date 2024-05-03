@@ -8,6 +8,7 @@ import "./index.css";
 import Alert from "./components/Alert";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { getProblems } from "./utils/problems";
 
 export default function App() {
   const theme = useRecoilValue(themeAtom);
@@ -22,6 +23,9 @@ export default function App() {
       }
     }
   }, [theme]);
+  useEffect(() => {
+    getProblems();
+  }, []);
   return (
     <div className="w-screen h-screen overflow-hidden">
       <Navbar />

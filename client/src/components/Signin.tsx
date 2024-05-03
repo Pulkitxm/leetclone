@@ -1,15 +1,54 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogin } from "../utils/login";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { alertAtom } from "../state/alert";
 
 export default function Signin() {
-  const handleLoginFormSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
-    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
-    const res= await handleLogin(email, password);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const setAlert = useSetRecoilState(alertAtom);
+  const handleLoginFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+
+      const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
+      const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
+      const res = await handleLogin(email, password);
+
+      if (res && res.message && res.type) {
+        if (res.type === "error") {
+          setAlert({
+            message: res.message,
+            type: "error",
+            position: "bottom-right",
+            show: true,
+          });
+          setLoading(false);
+        } else {
+          setAlert({
+            message: res.message,
+            type: "success",
+            position: "bottom-right",
+            show: true,
+          });
+          setLoading(false);
+          navigate("/");
+        }
+      }
+    } catch (err) {
+      setAlert({
+        message: "An unexpected error occurred",
+        type: "error",
+        position: "bottom-right",
+        show: true,
+      });
+      setLoading(false);
+    }
   };
   return (
-    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
       <Link
         to=""
         className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -21,7 +60,10 @@ export default function Signin() {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign in to your account
           </h1>
-          <form className="space-y-4 md:space-y-6" onSubmit={handleLoginFormSubmit}>
+          <form
+            className="space-y-4 md:space-y-6"
+            onSubmit={handleLoginFormSubmit}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -74,12 +116,24 @@ export default function Signin() {
                 </div>
               </div>
             </div>
-            <button
-              type="submit"
-              className="border w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"
-            >
-              Sign in
-            </button>
+            {loading ? (
+              <button
+                type="submit"
+                className="border w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white dark:invert flex space-x-2 justify-center items-center h-10"
+              >
+                  <span className="sr-only">Loading...</span>
+                  <div className="h-3 w-3 bg-black rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                  <div className="h-3 w-3 bg-black rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                  <div className="h-3 w-3 bg-black rounded-full animate-bounce"></div>
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="border w-full bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:text-white"
+              >
+                Sign in
+              </button>
+            )}
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
               Don’t have an account yet?{" "}
               <Link

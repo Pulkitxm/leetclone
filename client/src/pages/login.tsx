@@ -12,7 +12,7 @@ export default function Login() {
     }
   },[cookies, navigate]);
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section className="bg-gray-50 dark:bg-gray-900 h-screen">
       <Signin />
     </section>
   );
