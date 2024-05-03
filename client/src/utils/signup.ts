@@ -52,7 +52,10 @@ export const handleRegister = async (
           type: "error",
         };
       } catch (err) {
-        console.log("An unexpected error occurred: ");
+        return {
+          message: "An unexpected error occurred: ",
+          type: "error",
+        };
       }
     } else if (error.response.data.mesage) {
       return {

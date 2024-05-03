@@ -2,6 +2,12 @@ import { Link } from "react-router-dom";
 import { handleLogin } from "../utils/login";
 
 export default function Signin() {
+  const handleLoginFormSubmit = async(e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
+    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
+    const res= await handleLogin(email, password);
+  };
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <Link
@@ -15,7 +21,7 @@ export default function Signin() {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign in to your account
           </h1>
-          <form className="space-y-4 md:space-y-6" onSubmit={handleLogin}>
+          <form className="space-y-4 md:space-y-6" onSubmit={handleLoginFormSubmit}>
             <div>
               <label
                 htmlFor="email"

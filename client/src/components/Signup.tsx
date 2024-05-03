@@ -18,7 +18,6 @@ export default function Signup() {
         .value;
 
       setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 5000));
       const res = await handleRegister(email, password, rePassword);
       if (res && res.message && res.type) {
         if (res.type === "error") {
@@ -37,7 +36,7 @@ export default function Signup() {
             show: true,
           });
           setLoading(false);
-          navigate("/");
+          navigate("/login");
         }
       }
     } catch (err) {

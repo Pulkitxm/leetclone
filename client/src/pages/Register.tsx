@@ -8,7 +8,7 @@ export default function Register() {
   const [cookies] = useCookies(["token"]);
   useEffect(()=>{
     if(cookies.token){
-      navigate("/");
+      navigate("/signin");
     }
   },[cookies, navigate]);
   return (

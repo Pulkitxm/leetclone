@@ -8,12 +8,12 @@ export default function Alert() {
   useEffect(() => {
     if (alert.message) {
       setTimeout(() => {
-        // setAlert({
-        //   message: "",
-        //   type: "success",
-        //   position: "top-right",
-        //   show: false,
-        // });
+        setAlert({
+          message: "",
+          type: "success",
+          position: "top-right",
+          show: false,
+        });
       }, 3000);
     }
   }, [alert, setAlert]);

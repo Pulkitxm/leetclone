@@ -40,8 +40,6 @@ export const handleLoginRoute = async (req: Request, res: Response) => {
 
     res.cookie("token", token, {
       expires: new Date(Date.now() + 30 * 60 * 1000),
-      httpOnly: true,
-      secure: true,
     });
 
     res.status(200).json({
