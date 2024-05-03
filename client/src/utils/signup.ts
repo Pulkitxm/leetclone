@@ -1,13 +1,11 @@
 import axios from "axios";
 import { baseUrl } from "../config";
 
-export const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-
-  const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
-  const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
-  const rePassword = (e.currentTarget.elements[2] as HTMLInputElement).value;
-
+export const handleRegister = async (
+  email: string,
+  password: string,
+  rePassword: string
+) => {
   if (password !== rePassword) {
     return {
       message: "Passwords do not match",
