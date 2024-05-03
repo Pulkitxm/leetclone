@@ -55,7 +55,11 @@ export default function ProfileMenu() {
         <MenuList className="p-1" placeholder={undefined}>
           <div
             onClick={() =>
-              changeTheme((prev) => (prev == "dark" ? "light" : "dark"))
+              changeTheme((prev) => {
+                const newTheme = prev == "dark" ? "light" : "dark";
+                localStorage.setItem("theme", newTheme);
+                return newTheme;
+              })
             }
           >
             {/* @ts-expect-error___ */}
@@ -70,7 +74,11 @@ export default function ProfileMenu() {
                 id="darkSwitch"
                 checked={theme == "dark"}
                 onChange={() => {
-                  changeTheme((prev) => (prev == "dark" ? "light" : "dark"));
+                  changeTheme((prev) => {
+                    const newTheme = prev == "dark" ? "light" : "dark";
+                    localStorage.setItem("theme", newTheme);
+                    return newTheme;
+                  });
                 }}
               ></input>
               <p>Dark Mode</p>
