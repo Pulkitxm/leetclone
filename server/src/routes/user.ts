@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { handleLoginRoute, handleSignupRoute } from "../controllers/user";
 
-const UserRouter= Router();
+const UserRouter = Router();
 
-UserRouter.get('/login', (req, res) => {
-    res.send('Hello from User Router');
-});
+UserRouter.post("/login", handleLoginRoute);
+UserRouter.post("/register", handleSignupRoute);
 
 export default UserRouter;

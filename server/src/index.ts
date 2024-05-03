@@ -1,12 +1,17 @@
 import express from "express";
 import { client } from "./redis";
 import codeRouter from "./routes/code";
+import UserRouter from "./routes/user";
+
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 //routes
-app.use("/codes",codeRouter);
+app.use("/api/_v1/codes",codeRouter);
+app.use("/api/_v1/user",UserRouter);
 
 async function startServer() {
     try {
