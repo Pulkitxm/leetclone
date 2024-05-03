@@ -39,7 +39,6 @@ export const handleLogin = async (
         };
       };
     };
-    console.log(err);
     if (error.response.data.error) {
       try {
         let missing = "";
@@ -57,6 +56,7 @@ export const handleLogin = async (
         };
       }
     } else if (error.response.data.mesage) {
+      console.log("error.response.data.mesage");
       return {
         message: error.response.data.mesage,
         type: "error",
