@@ -27,14 +27,14 @@ export default function ProfileMenu() {
     >
       <Menu open={isMenuOpen} placement="bottom-end">
         <MenuHandler>
+          {/* @ts-expect-error___ */}
           <Button
             variant="text"
             color="blue-gray"
             className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
             placeholder={undefined}
-            onPointerEnterCapture={undefined}
-            onPointerLeaveCapture={undefined}
           >
+            {/* @ts-expect-error___ */}
             <Avatar
               variant="circular"
               size="sm"
@@ -42,8 +42,6 @@ export default function ProfileMenu() {
               className="border border-gray-900 p-0.5"
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFJmE1oJBAYuVBVQ2fan32pAk80sP-JLQ2LWmcIVSz7g&s"
               placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
             />
             <ChevronDownIcon
               strokeWidth={2.5}
@@ -53,22 +51,20 @@ export default function ProfileMenu() {
             />
           </Button>
         </MenuHandler>
+        {/* @ts-expect-error___ */}
         <MenuList
           className="p-1"
           placeholder={undefined}
-          onPointerEnterCapture={undefined}
-          onPointerLeaveCapture={undefined}
         >
           <div
             onClick={() =>
               changeTheme((prev) => (prev == "dark" ? "light" : "dark"))
             }
           >
+            {/* @ts-expect-error___ */}
             <MenuItem
               className={`flex items-center gap-2 rounded ${"hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"}`}
               placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
             >
               <input
                 data-hs-theme-switch=""
@@ -86,24 +82,22 @@ export default function ProfileMenu() {
               closeMenu();
             }}
           >
+            {/* @ts-expect-error___ */}
             <MenuItem
               className={`flex items-center gap-2 rounded ${"hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"}`}
               placeholder={undefined}
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
             >
               {React.createElement(PowerIcon, {
                 className: "h-4 w-4",
                 strokeWidth: 2,
               })}
+              {/* @ts-expect-error___ */}
               <Typography
                 as="span"
                 variant="small"
                 className="font-normal"
                 color="inherit"
                 placeholder={undefined}
-                onPointerEnterCapture={undefined}
-                onPointerLeaveCapture={undefined}
               >
                 Sign Out
               </Typography>
