@@ -3,6 +3,7 @@ import Editor from "../components/Code/Editor";
 import defaultLanguages from "../data/defaultLanguages";
 import { useParams } from "react-router-dom";
 import Options from "../components/Code/Options";
+import Description from "../components/Code/Description";
 
 export default function Problems() {
   const problemId = useParams<{ id: string }>().id;
@@ -51,7 +52,7 @@ export default function Problems() {
 
   return (
     <div className="w-full h-full flex">
-      <div className="w-[50%] bg-red-100"></div>
+      <Description problemId={problemId} />
       <div className="h-full w-[50%]">
         <Options language={language} setLanguage={setLanguage} />
         <Editor
