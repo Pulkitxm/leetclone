@@ -13,6 +13,7 @@ codeRouter.get("/", async (req, res) => {
                 name:prob.name,
                 topics:prob.topics,
                 difficulty:prob.difficulty,
+                id:prob.id
             }
         });
         return res.status(200).json(allProbs);
