@@ -1,25 +1,12 @@
 import express from "express";
-import { createClient } from "redis";
+import { client } from "./redis";
+import codeRouter from "./routes/code";
 
 const app = express();
 app.use(express.json());
 
-const client = createClient();
-client.on('error', (err) => console.log('Redis Client Error', err));
-
-app.post("/submit", async (req, res) => {
-    const code = req.body.code;
-    const language = req.body.language;
-
-    try {
-        await client.lPush("problems", JSON.stringify({ code, language }));
-        // Store in the database
-        res.status(200).send("Submission received and stored.");
-    } catch (error) {
-        console.error("Redis error:", error);
-        res.status(500).send("Failed to store submission.");
-    }
-});
+//routes
+app.use("/codes",codeRouter);
 
 async function startServer() {
     try {
@@ -33,5 +20,4 @@ async function startServer() {
         console.error("Failed to connect to Redis", error);
     }
 }
-
 startServer();
