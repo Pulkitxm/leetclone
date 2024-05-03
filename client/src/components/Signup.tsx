@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleRegister } from "../utils/signup";
 import { useSetRecoilState } from "recoil";
 import { alertAtom } from "../state/alert";
 import { useState } from "react";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const setAlert = useSetRecoilState(alertAtom);
   const [loading, setLoading] = useState<boolean>(false);
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,6 +37,7 @@ export default function Signup() {
             show: true,
           });
           setLoading(false);
+          navigate("/");
         }
       }
     } catch (err) {
