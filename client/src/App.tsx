@@ -1,12 +1,13 @@
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { themeAtom } from "./state/theme";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import "./index.css";
 import Alert from "./components/Alert";
-import Login from "./pages/login";
-import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { themeAtom } from "./state/theme";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 export default function App() {
   const theme = useRecoilValue(themeAtom);
@@ -28,7 +29,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<div>Home</div>} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<div>Register</div>} />
+        <Route path="/register" element={<Register />} />
         <Route path="/:name" element={<div>Problems</div>} />
         <Route path="/*" element={<Navigate to={"/"} />} />
       </Routes>
