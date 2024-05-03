@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Alert from "./components/Alert";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Prroblems from "./pages/Prroblem";
 
 export default function App() {
   const theme = useRecoilValue(themeAtom);
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/:name" element={<div>Problems</div>} />
+        <Route path="/:id" element={<Prroblems />} />
         <Route path="/*" element={<Navigate to={"/"} />} />
       </Routes>
     </div>
