@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { handleRegister } from "../utils/signup";
+import { useSetRecoilState } from "recoil";
+import { alertAtom } from "../state/alert";
 
 export default function Signup() {
+  const setAlert = useSetRecoilState(alertAtom);
   return (
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <Link
@@ -15,7 +18,39 @@ export default function Signup() {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Sign up to your account
           </h1>
-          <form className="space-y-4 md:space-y-6" onSubmit={handleRegister}>
+          <form
+            className="space-y-4 md:space-y-6"
+            onSubmit={async (e) => {
+              try {
+                const res = await handleRegister(e);
+                console.log(res);
+                if (res && res.message && res.type) {
+                  if (res.type === "error") {
+                    setAlert({
+                      message: res.message,
+                      type: "error",
+                      position: "bottom-right",
+                      show: true,
+                    });
+                  } else {
+                    setAlert({
+                      message: res.message,
+                      type: "success",
+                      position: "bottom-right",
+                      show: true,
+                    });
+                  }
+                }
+              } catch (err) {
+                setAlert({
+                  message: "An unexpected error occurred",
+                  type: "error",
+                  position: "bottom-right",
+                  show: true,
+                });
+              }
+            }}
+          >
             <div>
               <label
                 htmlFor="email"

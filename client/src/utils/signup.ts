@@ -1,15 +1,72 @@
-export const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+import axios from "axios";
+import { baseUrl } from "../config";
 
-    const email= (e.currentTarget.elements[0] as HTMLInputElement).value;
-    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
-    const rePassword = (e.currentTarget.elements[2] as HTMLInputElement).value;
-    const isRequired= (e.currentTarget.elements[3] as HTMLInputElement).checked;
+export const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    console.log({
-        email,
-        password,
-        rePassword,
-        isRequired
+  const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
+  const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
+  const rePassword = (e.currentTarget.elements[2] as HTMLInputElement).value;
+
+  if (password !== rePassword) {
+    return {
+      message: "Passwords do not match",
+      type: "error",
+    };
+  }
+  if (password.length < 8) {
+    return {
+      message: "Password must be at least 8 characters",
+      type: "error",
+    };
+  }
+
+  const body = { email, password, rePassword };
+
+  try {
+    const res = await axios.post(baseUrl + "/api/_v1/user/register", body, {
+      withCredentials: true,
     });
+    return {
+      message: res.data.message,
+      type: "success",
+    };
+  } catch (err) {
+    const error = err as {
+      response: {
+        data: {
+          error: {
+            path: string;
+          }[];
+          mesage: string;
+        };
+      };
+    };
+    console.log(err);
+    if (error.response.data.error) {
+      try {
+        let missing = "";
+        error.response.data.error.map((e: { path: string }) => {
+          missing += e.path + ", ";
+        });
+        return {
+          message: missing + "is missing",
+          type: "error",
+        };
+      } catch (err) {
+        console.log("An unexpected error occurred: ");
+      }
+    } else if (error.response.data.mesage) {
+      return {
+        message: error.response.data.mesage,
+        type: "error",
+      };
+    } else {
+      console.error(err);
+      return {
+        message: "An unexpected error occurred: ",
+        type: "error",
+      };
+    }
+  }
 };

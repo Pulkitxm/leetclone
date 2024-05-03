@@ -1,13 +1,14 @@
-export const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+import axios from "axios";
+import { baseUrl } from "../config";
 
-    const email= (e.currentTarget.elements[0] as HTMLInputElement).value;
-    const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
-    const isRequired= (e.currentTarget.elements[2] as HTMLInputElement).checked;
+export const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    console.log({
-        email,
-        password,
-        isRequired
-    });
+  const email = (e.currentTarget.elements[0] as HTMLInputElement).value;
+  const password = (e.currentTarget.elements[1] as HTMLInputElement).value;
+  const body = { email, password };
+
+  await axios.post(baseUrl + "/api/_v1/user/login", body, {
+    withCredentials: true,
+  });
 };

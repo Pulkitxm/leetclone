@@ -37,8 +37,16 @@ export const handleLoginRoute = async (req: Request, res: Response) => {
         expiresIn: process.env.JWT_EXPIRES,
       }
     );
-    
-    res.status(200).json({ token });
+
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 30 * 60 * 1000),
+      httpOnly: true,
+      secure: true,
+    });
+
+    res.status(200).json({
+      message: "User logged in successfully",
+    });
   } catch (err) {
     if (err instanceof z.ZodError) {
       res.status(400).json({ error: err.issues });
