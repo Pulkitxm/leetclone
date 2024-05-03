@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { executeCode } from "../../utils/code";
 
-export default function Options({
+export default function RightOptions({
   language,
   setLanguage,
   value,

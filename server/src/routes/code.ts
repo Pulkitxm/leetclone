@@ -41,6 +41,7 @@ codeRouter.get("/:id", async (req, res) => {
       constraints: problem.Constraints,
       testCases: problem.testCases,
       description: problem.description,
+      solutions: problem.Solutions,
     });
   } catch (error) {
     res.status(500).send("Failed to fetch problems.");
@@ -57,7 +58,6 @@ codeRouter.post("/submit", async (req, res) => {
       `problems`,
       JSON.stringify({ code, language, problemId })
     );
-
     return res.status(200).send("Submission received and stored.");
   } catch (error) {
     console.error("Redis error:", error);
@@ -67,20 +67,19 @@ codeRouter.post("/submit", async (req, res) => {
 
 codeRouter.get("/check/problem/:problemId", async (req, res) => {
   const problemId = req.params.problemId;
-  console.log("Problem ID:", problemId);
-  
   try {
     // redis
     const output = await client.brPop(`solutions`, 0);
-    console.log("Output:", output);
-
     if(!output) return res.status(404).send("Output not found.");
 
     const data = JSON.parse(output.element);
 
     if (data.problemId !== problemId) return res.status(404).send("Output not found.");
 
-    return res.status(200).json(data);
+    return res.status(200).json({
+      status: data.output.status,
+      message: data.output.message,
+    });
   } catch (error) {
     console.error("Redis error:", error);
     res.status(500).send("Failed to check submission.");

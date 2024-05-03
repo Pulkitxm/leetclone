@@ -20,8 +20,6 @@ function processSubmission(submission) {
         const customOutput = { output: "", error: "" };
         customOutput.output = output.run.stdout;
         customOutput.error = output.run.code === 0 ? "" : output.run.stderr;
-        // await client.lPush(`solution:${problemID}`, JSON.stringify({ code, language }));
-        console.log("Output:", output);
         return output;
     });
 }
@@ -29,13 +27,11 @@ function startWorker() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield client.connect();
-            console.log("Worker connected to Redis.");
             while (true) {
                 try {
                     const submission = yield client.brPop("problems", 0);
                     if (!submission)
                         continue;
-                    console.log("Received submission:", submission);
                     yield processSubmission(submission.element);
                 }
                 catch (error) {

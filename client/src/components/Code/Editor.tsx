@@ -17,11 +17,12 @@ export default function CodeEditor({
 }: {
   lang: "cpp" | "java" | "python" | "javascript";
   value: AllProbs;
-  changeValue: (_: AllProbs) => void;
+  changeValue?: (_: AllProbs) => void;
   problemId: string;
 }) {
   const theme = useRecoilValue(themeAtom);
   const handleChangeValue = (val: string) => {
+    if (!changeValue) return;
     const newState = { ...value };
     newState[lang] = val;
     changeValue(newState);
@@ -31,7 +32,7 @@ export default function CodeEditor({
   return (
     <Editor
       className="w-[1000px] h-full text-2xl pt-1"
-      defaultLanguage={lang}
+      language={lang}
       value={value[lang]}
       onChange={(val) => handleChangeValue(val ? val : "")}
       theme={theme == "dark" ? "vs-dark" : "vs-light"}
