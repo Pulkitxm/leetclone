@@ -7,7 +7,7 @@ import ProfileMenu from "./PrrofileMenu";
 export default function ComplexNavbar() {
   return (
     <Navbar
-      className="w-screen py-2 lg:px-20"
+      className="w-screen py-2 lg:px-20 dark:bg-black rounded-none"
       style={{
         maxWidth:"100vw"
       }}
@@ -19,7 +19,7 @@ export default function ComplexNavbar() {
         <Typography
           as="a"
           href="#"
-          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium"
+          className="mr-4 ml-2 cursor-pointer py-1.5 font-medium text-black dark:text-white"
           placeholder={undefined}
           onPointerEnterCapture={undefined}
           onPointerLeaveCapture={undefined}
