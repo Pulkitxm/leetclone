@@ -2,22 +2,43 @@ import Editor from "@monaco-editor/react";
 import { useRecoilValue } from "recoil";
 import { themeAtom } from "../../state/theme";
 
-export default function CodeEditor({ lang }: { lang: string }) {
+interface AllProbs {
+  javascript: string;
+  python: string;
+  java: string;
+  cpp: string;
+}
+
+export default function CodeEditor({
+  lang,
+  value,
+  changeValue,
+  problemId
+}: {
+  lang: "cpp" | "java" | "python" | "javascript";
+  value: AllProbs;
+  changeValue: (_: AllProbs) => void;
+  problemId: string;
+}) {
   const theme = useRecoilValue(themeAtom);
+  const handleChangeValue = (val: string) => {
+    const newState = { ...value };
+    newState[lang] = val;
+    changeValue(newState);
+    
+    localStorage.setItem(problemId, JSON.stringify(newState));
+  };
   return (
     <Editor
-      className="w-full h-full text-2xl"
+      className="w-[1000px] h-full text-2xl pt-1"
       defaultLanguage={lang}
-      defaultValue="// some comment"
+      value={value[lang]}
+      onChange={(val) => handleChangeValue(val ? val : "")}
       theme={theme == "dark" ? "vs-dark" : "vs-light"}
       options={{
-        scrollBeyondLastLine:false,
-        fontSize:20,
-        fastScrollSensitivity: 1,
-        mouseWheelScrollSensitivity: 1,
-        smoothScrolling: true,
+        fontSize: 20,
         mouseWheelZoom: true,
-    }}
+      }}
     />
   );
 }
