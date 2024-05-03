@@ -2,12 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProblems } from "../utils/problems";
 
+type Problem = {
+  id: string;
+  name: string;
+  difficulty: string;
+  topics: string[];
+};
+
 export default function Home() {
-  const [allProbs, setAllProbs] = useState([]);
+  const [allProbs, setAllProbs] = useState<Problem[] | []>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getProblems().then((res) => {
+    getProblems().then((res: Problem[]) => {
       setAllProbs(res);
     });
   });

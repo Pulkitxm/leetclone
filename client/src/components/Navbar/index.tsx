@@ -1,4 +1,4 @@
-import { Navbar, Typography } from "@material-tailwind/react";
+import { Navbar } from "@material-tailwind/react";
 import ProfileMenu from "./PrrofileMenu";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
