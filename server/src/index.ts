@@ -2,12 +2,14 @@ import express from "express";
 import { client } from "./redis";
 import codeRouter from "./routes/code";
 import UserRouter from "./routes/user";
+import cors from "cors";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 //routes
 app.use("/api/_v1/codes",codeRouter);
