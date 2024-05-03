@@ -1,14 +1,20 @@
 import { Dispatch, SetStateAction } from "react";
+import { executeCode } from "../../utils/code";
 
 export default function Options({
   language,
   setLanguage,
+  value,
 }: {
   language: string;
+  value: string;
   setLanguage: Dispatch<
     SetStateAction<"javascript" | "python" | "java" | "cpp">
   >;
 }) {
+  const hanldeCodeExecution = () => {
+    executeCode(value, language);
+  };
   return (
     <div className="flex dark:bg-[#1e1e1e] bg:[rgb(255 255 254)] border-b-2 dark:border-white dark:text-white ">
       <select
@@ -27,7 +33,10 @@ export default function Options({
         <option value="java">Java</option>
         <option value="python">Python</option>
       </select>
-      <button className="w-[25%] bg-gray-800 flex items-center justify-center border-x-2 hover:opacity-80">
+      <button
+        className="w-[25%] bg-gray-800 flex items-center justify-center border-x-2 hover:opacity-80"
+        onClick={hanldeCodeExecution}
+      >
         Run
       </button>
       <button className="w-[25%] bg-gray-800 flex items-center justify-center">

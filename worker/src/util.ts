@@ -1,8 +1,7 @@
 import { supportedLangsVersions } from "./config";
 import { CodeType } from "./types";
 
-export const executeCode = async (obj: CodeType) => {
-  
+export const executeCode = async (obj: Pick<CodeType, "code" | "language">) => {
   const lang = obj.language;
   const langVersions = supportedLangsVersions;
   if (!langVersions[`${lang}`]) throw new Error("Language not supported");

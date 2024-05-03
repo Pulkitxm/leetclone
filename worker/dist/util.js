@@ -32,6 +32,7 @@ const executeCode = (obj) => __awaiter(void 0, void 0, void 0, function* () {
             ],
         }),
     });
-    return resp;
+    const data = yield resp.json();
+    return data;
 });
 exports.executeCode = executeCode;

@@ -54,7 +54,7 @@ export default function Problems() {
     <div className="w-full h-full flex">
       <Description problemId={problemId} />
       <div className="h-full w-[50%]">
-        <Options language={language} setLanguage={setLanguage} />
+        <Options language={language} setLanguage={setLanguage} value={userInputLang[language]} />
         <Editor
           lang={language}
           value={userInputLang}

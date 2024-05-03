@@ -50,13 +50,40 @@ codeRouter.get("/:id", async (req, res) => {
 codeRouter.post("/submit", async (req, res) => {
   const code = req.body.code;
   const language = req.body.language;
+  const problemId = req.body.problemId;
 
   try {
-    await client.lPush("problems", JSON.stringify({ code, language }));
-    res.status(200).send("Submission received and stored.");
+    await client.lPush(
+      `problems`,
+      JSON.stringify({ code, language, problemId })
+    );
+
+    return res.status(200).send("Submission received and stored.");
   } catch (error) {
     console.error("Redis error:", error);
     res.status(500).send("Failed to store submission.");
+  }
+});
+
+codeRouter.get("/check/problem/:problemId", async (req, res) => {
+  const problemId = req.params.problemId;
+  console.log("Problem ID:", problemId);
+  
+  try {
+    // redis
+    const output = await client.brPop(`solutions`, 0);
+    console.log("Output:", output);
+
+    if(!output) return res.status(404).send("Output not found.");
+
+    const data = JSON.parse(output.element);
+
+    if (data.problemId !== problemId) return res.status(404).send("Output not found.");
+
+    return res.status(200).json(data);
+  } catch (error) {
+    console.error("Redis error:", error);
+    res.status(500).send("Failed to check submission.");
   }
 });
 
