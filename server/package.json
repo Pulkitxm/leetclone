@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "tsc -b && node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "add-data": "tsc -b && node dist/data/add.js"
   },
   "keywords": [],
   "author": "",

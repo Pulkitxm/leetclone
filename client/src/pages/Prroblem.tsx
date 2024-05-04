@@ -9,6 +9,7 @@ import LeftOptions from "../components/Code/LeftOptions";
 import { getProblem } from "../utils/problems";
 import { themeAtom } from "../state/theme";
 import { useRecoilValue } from "recoil";
+import Execution from "../components/Code/Execution";
 
 type Problem = {
   name: string;
@@ -67,7 +68,6 @@ export default function Problems() {
     java: string;
     cpp: string;
   }
-
   const [details, setDetails] = useState<Problem>({
     name: "",
     topics: [],
@@ -84,7 +84,7 @@ export default function Problems() {
     },
   });
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [runFetching, setRunFetching] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
     getProblem(problemId).then((res) => {
@@ -102,6 +102,10 @@ export default function Problems() {
   >("cpp");
 
   const [userInputLang, setUserInputLang] = useState<AllProbs>(defaultValue);
+  const [showExecution, setShowExecution] = useState(false);
+  useEffect(() => {
+    runFetching && setShowExecution(true);
+  }, [runFetching]);
   return (
     <div className="w-full h-full flex justify-center dark:bg-[#0f0f0f]">
       <div className="h-[91%] w-[48%] rounded-xl m-2 overflow-hidden">
@@ -132,6 +136,8 @@ export default function Problems() {
           language={language}
           setLanguage={setLanguage}
           value={userInputLang[language]}
+          setRunFetching={setRunFetching}
+          runFetching={runFetching}
         />
         <Editor
           lang={language}
@@ -139,6 +145,15 @@ export default function Problems() {
           changeValue={setUserInputLang}
           problemId={problemId}
         />
+        {showExecution && (
+          <Execution
+            value={userInputLang[language]}
+            language={language}
+            setRunFetching={setRunFetching}
+            testCases={details.testCases.map((i:string)=>JSON.parse(i))}
+            setShowExecution={setShowExecution}
+          />
+        )}
       </div>
     </div>
   );

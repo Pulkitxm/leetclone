@@ -14,7 +14,7 @@ export default function Alert() {
           position: "top-right",
           show: false,
         });
-      }, 3000);
+      }, 7000);
     }
   }, [alert, setAlert]);
 
@@ -31,7 +31,7 @@ export default function Alert() {
 
   return (
     <div
-      className={`fixed ${position} block p-4 text-base leading-5 text-white bg-${bgColor} rounded-lg opacity-100 font-regular flex`}
+      className={`z-50 fixed ${position} block p-4 text-base leading-5 text-white bg-${bgColor} rounded-lg opacity-100 font-regular flex`}
       style={{
         minWidth: "200px",
       }}

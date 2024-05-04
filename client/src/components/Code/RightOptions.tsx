@@ -1,19 +1,42 @@
 import { Dispatch, SetStateAction } from "react";
-import { executeCode } from "../../utils/code";
+import { useCookies } from "react-cookie";
+import { useSetRecoilState } from "recoil";
+import { alertAtom } from "../../state/alert";
+import Loader from "../Loader";
 
 export default function RightOptions({
   language,
   setLanguage,
-  value,
+  setRunFetching,
+  runFetching,
 }: {
   language: string;
   value: string;
   setLanguage: Dispatch<
     SetStateAction<"javascript" | "python" | "java" | "cpp">
   >;
+  setRunFetching: Dispatch<SetStateAction<boolean>>;
+  runFetching: boolean;
 }) {
+  const [cookies] = useCookies(["token"]);
+  const setAlert = useSetRecoilState(alertAtom);
   const hanldeCodeExecution = () => {
-    executeCode(value, language);
+    if (runFetching) {
+      return setAlert({
+        type: "error",
+        message: "Wait for the current code to finish execution",
+        position: "bottom-left",
+        show: true,
+      });
+    }
+    if (!cookies.token)
+      return setAlert({
+        type: "error",
+        message: "You need to login to run the code",
+        position: "bottom-left",
+        show: true,
+      });
+    setRunFetching(true);
   };
   return (
     <div className="flex dark:bg-[#1e1e1e] bg:[rgb(255 255 254)] border-b-2 dark:border-white dark:text-white ">
@@ -34,13 +57,12 @@ export default function RightOptions({
         <option value="python">Python</option>
       </select>
       <button
-        className="w-[25%] bg-gray-800 flex items-center justify-center border-x-2 hover:opacity-80"
+        className={`w-[50%] bg-gray-800 flex items-center justify-center border-x-2 hover:opacity-80 ${
+          runFetching ? "opacity-80" : ""
+        } `}
         onClick={hanldeCodeExecution}
       >
-        Run
-      </button>
-      <button className="w-[25%] bg-gray-800 flex items-center justify-center">
-        Save
+        {runFetching ? <Loader /> : "Run"}
       </button>
     </div>
   );

@@ -13,7 +13,7 @@ export default function CodeEditor({
   lang,
   value,
   changeValue,
-  problemId
+  problemId,
 }: {
   lang: "cpp" | "java" | "python" | "javascript";
   value: AllProbs;
@@ -26,12 +26,11 @@ export default function CodeEditor({
     const newState = { ...value };
     newState[lang] = val;
     changeValue(newState);
-    
     localStorage.setItem(problemId, JSON.stringify(newState));
   };
   return (
     <Editor
-      className="w-[1000px] h-full text-2xl pt-1"
+      className="w-full h-full text-2xl pt-1"
       language={lang}
       value={value[lang]}
       onChange={(val) => handleChangeValue(val ? val : "")}

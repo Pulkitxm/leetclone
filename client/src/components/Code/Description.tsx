@@ -57,12 +57,12 @@ export default function Description({
           <div className="text-lg font-semibold my-10">
             Test Cases:
             {details.testCases.map((testCase, idx) => {
-              const { input, output } = JSON.parse(testCase);
+              const { dispInput, output } = JSON.parse(testCase);
               return (
                 <div key={idx} className="pl-5 my-5">
                   <div className="my-0.5">
                     <p className="inline-block mr-5">Input:</p>
-                    <p className="inline-block opacity-70">{input}</p>
+                    <p className="inline-block opacity-70">{dispInput}</p>
                   </div>
                   <div className="my-0.5">
                     <p className="inline-block mr-5">Output:</p>

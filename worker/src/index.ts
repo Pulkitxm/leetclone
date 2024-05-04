@@ -5,11 +5,13 @@ const client = createClient();
 
 async function processSubmission(submission: string) {
   const obj: CodeType = CodeTypeZod.parse(JSON.parse(submission));
+  console.log("Processing submission", obj);
   const output = await executeCode({
     code: obj.code,
     language: obj.language,
   });
   let customOutput = {};
+  console.log(output);
   if (output.run.code !== 0){
     customOutput = {
       status: "error",
@@ -21,6 +23,7 @@ async function processSubmission(submission: string) {
       message: output.run.stdout,
     };
   }  
+  console.log({ output: customOutput,problemId: obj.problemId});
 
   await client.lPush(
     `solutions`,

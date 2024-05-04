@@ -52,7 +52,6 @@ codeRouter.post("/submit", async (req, res) => {
   const code = req.body.code;
   const language = req.body.language;
   const problemId = req.body.problemId;
-
   try {
     await client.lPush(
       `problems`,
@@ -73,9 +72,7 @@ codeRouter.get("/check/problem/:problemId", async (req, res) => {
     if(!output) return res.status(404).send("Output not found.");
 
     const data = JSON.parse(output.element);
-
     if (data.problemId !== problemId) return res.status(404).send("Output not found.");
-
     return res.status(200).json({
       status: data.output.status,
       message: data.output.message,
