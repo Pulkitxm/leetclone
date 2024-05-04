@@ -57,7 +57,7 @@ export default function Description({
           <div className="text-lg font-semibold my-10">
             Test Cases:
             {details.testCases.map((testCase, idx) => {
-              const { dispInput, output } = JSON.parse(testCase);
+              const { dispInput, dispOutput } = JSON.parse(testCase);
               return (
                 <div key={idx} className="pl-5 my-5">
                   <div className="my-0.5">
@@ -66,7 +66,7 @@ export default function Description({
                   </div>
                   <div className="my-0.5">
                     <p className="inline-block mr-5">Output:</p>
-                    <p className="inline-block opacity-70">{output}</p>
+                    <p className="inline-block opacity-70">{dispOutput}</p>
                   </div>
                 </div>
               );

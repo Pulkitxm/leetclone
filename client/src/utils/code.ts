@@ -18,7 +18,7 @@ export const executeCode = async (
   try {
     await axios.post(baseUrl + "/api/_v1/codes/submit", {
       code: newCode,
-      language,
+      language:language==="cpp"?"c++":language,
       problemId,
     });
     const res = await axios.get(

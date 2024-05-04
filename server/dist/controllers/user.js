@@ -39,7 +39,7 @@ const handleLoginRoute = (req, res) => __awaiter(void 0, void 0, void 0, functio
             expiresIn: process.env.JWT_EXPIRES,
         });
         res.cookie("token", token, {
-            expires: new Date(Date.now() + 30 * 60 * 1000),
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
         });
         res.status(200).json({
             message: "User logged in successfully",

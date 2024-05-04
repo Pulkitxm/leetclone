@@ -39,7 +39,7 @@ export const handleLoginRoute = async (req: Request, res: Response) => {
     );
 
     res.cookie("token", token, {
-      expires: new Date(Date.now() + 30 * 60 * 1000),
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
     });
 
     res.status(200).json({
