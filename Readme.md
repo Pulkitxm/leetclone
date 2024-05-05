@@ -4,6 +4,10 @@
 
 This is a LeetCode clone project built using React, Express.js, Redis, and PostgreSQL, the application offers instant feedback on code execution.
 
+## Demo
+
+https://github.com/Pulkitxm/leetclone/assets/65671483/68a79580-2b25-4b34-b73c-1232837c249d
+
 ## Features
 
 - **Problem Set**: Includes 15 diverse coding problems for users to solve.
